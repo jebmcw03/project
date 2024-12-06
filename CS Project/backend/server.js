@@ -1,21 +1,46 @@
 // Sets up the server
 const express = require('express');
-
-// Make sure the backend is communicated with the frontend
 const cors = require('cors');
-const app = express();
 const mongoose = require('mongoose');
 
-app.use(cors());
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/yourDatabaseName', {
+// Create Express app
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Connect to MongoDB
+const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/testDatabase';
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+})
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-// route
-app.get('/', (req, res) => {
-  res.send('Welcome to the backend!');
+// Define Schema and Model to check database connection
+const userSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  email: String,
+});
+const User = mongoose.model('User', userSchema);
+
+
+app.get('/data', async (_req, res) => {
+  try {
+    // Fetch all documents from the 'users' collection
+    const users = await mongoose.connection.db.collection('users').find({}).toArray();
+    
+    // Log the data to see if it's being fetched correctly
+    console.log('Users data:', users);
+
+    // Send the data back to the client
+    res.json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).send('Failed to fetch data');
+  }
 });
 
 // Start the server
