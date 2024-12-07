@@ -1,29 +1,20 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### Backend ###
 
-### What is this repository for? ###
+* First change to the backend with the command cd backend.
+* Then run the command npm install.
+* Run the backend server with the command node sever.js.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Frontend ###
 
-### How do I get set up? ###
+* First change to the frontend with the command cd Frontend.
+* The run the command npm install.
+* then run the command npm start.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Editing the Connection String ###
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* edit the  .env filie in the backend folder. 
+* Replace the value of MONGO_URI with your MongoDB connection string.
+* Also replace the port to the your port number.
+* save the file then restart the backend server to make sure the changes are updated.
